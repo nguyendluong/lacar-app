@@ -40,4 +40,26 @@ class CarService
     {
         return $this->carRepository->getAvailableCars();
     }
+
+    /**
+     * Get car details and related cars for the detail page.
+     *
+     * @param int $id
+     * @return array|null
+     */
+    public function getCarDetail($id)
+    {
+        $car = $this->carRepository->findById($id);
+        
+        if (!$car) {
+            return null;
+        }
+
+        $relatedCars = $this->carRepository->getRandomCars(3, $car->id);
+
+        return [
+            'car' => $car,
+            'relatedCars' => $relatedCars
+        ];
+    }
 }

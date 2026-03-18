@@ -53,4 +53,22 @@ class CarRepository implements CarRepositoryInterface
     {
         return $this->model->find($id);
     }
+
+    /**
+     * Get random cars for related cars section.
+     *
+     * @param int $limit
+     * @param int|null $excludeId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRandomCars($limit = 3, $excludeId = null)
+    {
+        $query = $this->model->where('status', 'available');
+        
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+        
+        return $query->inRandomOrder()->take($limit)->get();
+    }
 }

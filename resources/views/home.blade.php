@@ -95,7 +95,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @forelse($featuredCars as $car)
                 <!-- Car Card -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition group">
+                <a href="{{ route('car.show', $car->id) }}" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition group block">
                     <div class="relative h-48 bg-gray-200 overflow-hidden">
                         <img src="{{ asset('images/cars/' . $car->image) }}" alt="{{ $car->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://via.placeholder.com/400x300?text={{ urlencode($car->name) }}'">
                         <div class="absolute top-3 left-3 flex gap-2">
@@ -111,12 +111,12 @@
                                 <div class="text-xs text-gray-500 line-through mb-0.5">{{ number_format($car->price_per_day * 1.2) }}đ</div>
                                 <div class="text-xl font-extrabold text-blue-600">{{ number_format($car->price_per_day) }}đ<span class="text-sm font-normal text-gray-500">/ngày</span></div>
                             </div>
-                            <button class="bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-2 px-4 rounded shadow transition">
+                            <span class="bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-2 px-4 rounded shadow transition inline-block">
                                 ĐẶT XE
-                            </button>
+                            </span>
                         </div>
                     </div>
-                </div>
+                </a>
                 @empty
                     <div class="col-span-full text-center py-12 text-gray-500">
                         Chưa có dữ liệu xe. Vui lòng chạy seeder.
@@ -290,7 +290,7 @@
                         <!-- Huge Quote Icon -->
                         <span class="absolute -top-6 -left-4 text-7xl text-green-100 max-h-0 z-0">"</span>
                         <p class="text-xl text-gray-700 leading-relaxed italic relative z-10 pl-6 border-l-4 border-green-400">
-                            Xe VF5 Plus mới tinh chạy cực êm. 100% điện nên thoát hẳn mùi xăng xe. Thủ tục thuê xe của bên L/A CAR cũng rất nhanh gọn, hỗ trợ trả xe nhiệt tình tại sân bay.
+                            Xe VF3 mới tinh chạy cực êm. 100% điện nên thoát hẳn mùi xăng xe. Thủ tục thuê xe của bên L/A CAR cũng rất nhanh gọn, hỗ trợ trả xe nhiệt tình tại sân bay.
                         </p>
                     </div>
 

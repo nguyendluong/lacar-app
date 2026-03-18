@@ -23,7 +23,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @forelse($featuredCars as $car)
                 <!-- Car Card -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition group">
+                <a href="{{ route('car.show', $car->id) }}" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition group block">
                     <div class="relative h-48 bg-gray-200 overflow-hidden">
                         <img src="{{ asset('images/cars/' . $car->image) }}" alt="{{ $car->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://via.placeholder.com/400x300?text={{ urlencode($car->name) }}'">
                         
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 @empty
                     <div class="col-span-full text-center py-12 text-gray-500">
                         Chưa có dữ liệu xe. Vui lòng chạy seeder.
