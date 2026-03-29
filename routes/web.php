@@ -42,7 +42,7 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])->prefix('admin'
     // Cars
     Route::resource('cars', AdminCarController::class)->except(['show']);
     // Users
-    Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::resource('users', AdminUserController::class)->except(['show']);
     // Bookings
     Route::get('bookings', [AdminBookingController::class, 'index'])->name('bookings.index');
     Route::patch('bookings/{booking}/status', [AdminBookingController::class, 'updateStatus'])->name('bookings.status');

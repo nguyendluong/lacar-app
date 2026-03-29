@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#booking-form" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-md transition shadow-lg text-center">
+                    <a href="{{ route('fleet') }}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-md transition shadow-lg text-center">
                         ĐẶT XE NGAY
                     </a>
                     <a href="#featured-cars" class="bg-gray-800 bg-opacity-50 hover:bg-opacity-70 border border-gray-600 text-white font-bold py-3 px-8 rounded-md transition text-center flex items-center justify-center gap-2">
@@ -436,7 +436,7 @@
                 <a href="tel:0845045468" class="flex-1 md:flex-none border border-gray-600 bg-gray-800 hover:bg-gray-700 text-center text-white py-3 px-6 rounded-md font-semibold transition">
                     Gọi: 084 504 5468
                 </a>
-                <a href="#" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-center text-white py-3 px-6 rounded-md font-bold transition shadow-lg">
+                <a href="{{ route('fleet') }}" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-center text-white py-3 px-6 rounded-md font-bold transition shadow-lg">
                     ĐẶT XE NGAY
                 </a>
             </div>

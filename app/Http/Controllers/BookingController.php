@@ -12,7 +12,7 @@ class BookingController extends Controller
 {
     public function index()
     {
-        $bookings = Booking::with('car')
+        $bookings = Booking::query()->with('car')
             ->where('user_id', Auth::id())
             // Exclude manually blocked dates done by admin itself (if they just blocked it, their UI shouldn't be cluttered unless they are admin, but let's hide admin blocks from user history)
             ->where('total_price', '>=', 0)

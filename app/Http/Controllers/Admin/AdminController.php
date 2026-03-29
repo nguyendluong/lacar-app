@@ -28,8 +28,8 @@ class AdminController extends Controller
         $totalCars = Car::count();
         $totalUsers = User::count();
         
-        $pendingBookings = Booking::with(['user', 'car'])->where('status', 'pending')->latest()->take(5)->get();
-        $upcomingPickups = Booking::with(['user', 'car'])->where('status', 'confirmed')->where('start_date', '>=', now())->orderBy('start_date')->take(5)->get();
+        $pendingBookings = Booking::query()->with(['user', 'car'])->where('status', 'pending')->latest()->take(5)->get();
+        $upcomingPickups = Booking::query()->with(['user', 'car'])->where('status', 'confirmed')->where('start_date', '>=', now())->orderBy('start_date')->take(5)->get();
 
         return view('admin.dashboard', compact('weeklyRevenue', 'monthlyRevenue', 'totalCars', 'totalUsers', 'pendingBookings', 'upcomingPickups'));
     }
