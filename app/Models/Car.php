@@ -12,7 +12,13 @@ class Car extends Model
         'brand',
         'model',
         'year',
+        'license_plate',
+        'image',
+        'battery_percent',
+        'range_km',
+        'price_per_hour',
         'price_per_day',
+        'price_per_week',
         'status',
     ];
 

@@ -173,51 +173,231 @@
                         </div>
 
                         <!-- Date Picker -->
-                        <div class="mb-6">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Chọn ngày giao / trả xe</label>
-                            <div class="flex items-center border border-gray-300 rounded-lg p-3 bg-gray-50">
-                                <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                <input type="text" value="09:00, 20/03 - 09:00, 21/03" class="w-full bg-transparent text-sm font-semibold outline-none text-gray-700 pointer-events-none">
+                        @if(session('error'))
+                            <div class="mb-4 bg-red-50 border-l-4 border-red-500 text-red-700 p-3 rounded shadow-sm text-sm font-bold">
+                                {{ session('error') }}
                             </div>
-                            <p class="text-xs text-gray-500 mt-2 italic">Xe sẽ được lấy vào cùng giờ và kết thúc cùng giờ ngày hôm sau.</p>
-                        </div>
+                        @endif
+                        <form id="booking-form" action="{{ route('bookings.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="car_id" value="{{ $car->id }}">
+                            <input type="hidden" name="start_date" id="start_date">
+                            <input type="hidden" name="end_date" id="end_date">
+                            <div class="mb-6">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Chọn thời gian thuê xe</label>
+                                <div class="flex items-center border border-gray-300 rounded-lg p-1.5 bg-white focus-within:ring-2 focus-within:ring-green-500 focus-within:border-green-500 transition">
+                                    <svg class="w-5 h-5 text-gray-400 ml-2 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    <input type="text" id="datePicker" name="dates" class="w-full bg-transparent text-sm font-semibold outline-none text-gray-800 p-2 cursor-pointer" placeholder="Chọn ngày nhận và trả xe (Bắt buộc)" required>
+                                </div>
+                                <p id="error-msg" class="text-xs text-red-500 mt-2 font-semibold hidden">Khoảng thời gian này đã có người thuê. Vui lòng chọn ngày khác!</p>
+                            </div>
 
                         <hr class="my-6 border-gray-200">
+
+                        <!-- Coupon Code -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Mã Khuyến Mãi</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="coupon_input" class="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-green-500 uppercase transition shadow-sm font-bold" placeholder="Nhập mã (nếu có)">
+                                <button type="button" id="applyCouponBtn" class="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded-lg font-bold transition shadow-sm whitespace-nowrap">Áp dụng</button>
+                            </div>
+                            <p id="coupon-msg" class="text-xs mt-2 font-bold hidden"></p>
+                        </div>
 
                         <h3 class="text-lg font-bold text-gray-900 border-l-4 border-green-500 pl-3 mb-6">Tóm tắt đặt xe</h3>
                         
                         <div class="space-y-3 text-sm mb-6">
                             <div class="flex justify-between">
-                                <span class="text-gray-500">Thời gian</span>
-                                <strong class="text-gray-900">1 ngày</strong>
+                                <span class="text-gray-500">Thời gian thuê</span>
+                                <strong class="text-gray-900" id="summary-days">1 ngày</strong>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-500">Loại giá</span>
-                                <strong class="text-gray-900">Theo ngày</strong>
+                                <span class="text-gray-500">Chi phí tạm tính</span>
+                                <strong class="text-gray-900"><span id="summary-rent">{{ number_format($car->price_per_day) }}</span> đ</strong>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">Giá thuê</span>
-                                <strong class="text-gray-900">{{ number_format($car->price_per_day * 1.2) }} đ</strong>
-                            </div>
-                            <div class="flex justify-between text-red-500">
-                                <span>Giảm giá</span>
-                                <strong>-{{ number_format(($car->price_per_day * 1.2) - $car->price_per_day) }} đ</strong>
+                            <div class="flex justify-between text-red-500 hidden" id="summary-discount-row">
+                                <span id="summary-discount-name">Giảm giá</span>
+                                <strong>-<span id="summary-discount">0</span> đ</strong>
                             </div>
                             <div class="flex justify-between items-end border-t border-gray-100 pt-3 mt-3">
                                 <span class="text-base font-bold text-gray-900">Tổng cộng</span>
-                                <strong class="text-2xl font-black text-blue-600">{{ number_format($car->price_per_day) }} đ</strong>
+                                <strong class="text-2xl font-black text-blue-600"><span id="summary-total">{{ number_format($car->price_per_day) }}</span> đ</strong>
                             </div>
                             <div class="flex justify-between mt-1">
                                 <span class="text-gray-500 text-xs text-right w-full">Cọc đảm bảo tài sản: <span class="font-bold text-gray-800">3.000.000 đ</span></span>
                             </div>
                         </div>
 
-                        <button class="w-full bg-gray-400 cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-xl transition shadow text-sm">
-                            HẾT TẠM XE TRONG KHOẢNG THỜI GIAN ĐÃ CHỌN
+                        <button id="submitBtn" type="submit" disabled class="w-full bg-gray-400 cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-xl transition shadow text-sm mt-4">
+                            VUI LÒNG CHỌN NGÀY
                         </button>
+                        </form>
                     </div>
                 </div>
             </div>
+
+<!-- Flatpickr setup -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/vn.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const bookedRanges = {!! $bookedRanges !!};
+    
+    const disableDates = bookedRanges.map(range => ({
+        from: range.from,
+        to: range.to
+    }));
+
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('error-msg');
+
+    flatpickr("#datePicker", {
+        mode: "range",
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        minDate: "today",
+        locale: "vn",
+        disable: disableDates,
+        onChange: function(selectedDates, dateStr, instance) {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+            submitBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+            submitBtn.textContent = 'VUI LÒNG CHỌN NGÀY TRẢ XE';
+            errorMsg.classList.add('hidden');
+
+            if (selectedDates.length === 2) {
+                const start = selectedDates[0];
+                const end = selectedDates[1];
+
+                document.getElementById('start_date').value = instance.formatDate(start, "Y-m-d H:i:s");
+                document.getElementById('end_date').value = instance.formatDate(end, "Y-m-d H:i:s");
+
+                let isOverlap = false;
+                disableDates.forEach(range => {
+                    const blockStart = new Date(range.from);
+                    const blockEnd = new Date(range.to);
+                    if ((start <= blockStart && end >= blockStart) || (start <= blockEnd && end >= blockEnd)) {
+                        isOverlap = true;
+                    }
+                });
+
+                if (isOverlap) {
+                    errorMsg.classList.remove('hidden');
+                    submitBtn.textContent = 'XE ĐÃ CÓ NGƯỜI ĐẶT TRONG THỜI GIAN NÀY';
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                    submitBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                    submitBtn.textContent = 'TIẾN HÀNH ĐẶT XE';
+                    
+                    recalculatePrice();
+                }
+            }
+        }
+    });
+
+    let currentCoupon = null;
+
+    document.getElementById('applyCouponBtn').addEventListener('click', async function() {
+        const code = document.getElementById('coupon_input').value.trim();
+        if (!code) return;
+
+        try {
+            const response = await fetch("{{ route('coupons.apply') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ code: code })
+            });
+            const data = await response.json();
+
+            const msgEl = document.getElementById('coupon-msg');
+            msgEl.classList.remove('hidden');
+
+            if (data.success) {
+                currentCoupon = data.coupon;
+                msgEl.textContent = "Áp dụng mã thành công!";
+                msgEl.classList.remove('text-red-500');
+                msgEl.classList.add('text-green-600');
+                
+                let hiddenInput = document.getElementById('applied_coupon_input');
+                if (!hiddenInput) {
+                    hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'coupon_code';
+                    hiddenInput.id = 'applied_coupon_input';
+                    document.getElementById('booking-form').appendChild(hiddenInput);
+                }
+                hiddenInput.value = currentCoupon.code;
+
+                recalculatePrice();
+            } else {
+                currentCoupon = null;
+                msgEl.textContent = data.message;
+                msgEl.classList.remove('text-green-600');
+                msgEl.classList.add('text-red-500');
+                
+                let hiddenInput = document.getElementById('applied_coupon_input');
+                if (hiddenInput) hiddenInput.remove();
+                
+                recalculatePrice();
+            }
+        } catch(e) {
+            console.error(e);
+        }
+    });
+
+    function recalculatePrice() {
+        const fp = document.querySelector("#datePicker") ? document.querySelector("#datePicker")._flatpickr : null;
+        let days = 1;
+
+        if (fp && fp.selectedDates.length === 2) {
+            const start = fp.selectedDates[0];
+            const end = fp.selectedDates[1];
+
+            const msPerDay = 1000 * 60 * 60 * 24;
+            const msDiff = end.getTime() - start.getTime();
+            days = Math.ceil(msDiff / msPerDay);
+            if (days < 1) days = 1;
+        }
+        
+        const pricePerDay = {{ $car->price_per_day }};
+        const standardTotal = pricePerDay * days;
+        
+        let couponDiscount = 0;
+        if (currentCoupon) {
+            if (currentCoupon.type === 'percent') {
+                couponDiscount = standardTotal * (currentCoupon.value / 100);
+            } else if (currentCoupon.type === 'fixed') {
+                couponDiscount = parseFloat(currentCoupon.value);
+            }
+            if (couponDiscount > standardTotal) couponDiscount = standardTotal;
+        }
+
+        const actualTotal = standardTotal - couponDiscount;
+
+        document.getElementById('summary-days').textContent = days + " ngày";
+        document.getElementById('summary-rent').textContent = standardTotal.toLocaleString('en-US');
+
+        const summaryDiscountRow = document.getElementById('summary-discount-row');
+        if (couponDiscount > 0) {
+            summaryDiscountRow.classList.remove('hidden');
+            document.getElementById('summary-discount').textContent = couponDiscount.toLocaleString('en-US');
+            
+            let nameSpan = document.getElementById('summary-discount-name');
+            if(nameSpan) nameSpan.textContent = `Khuyến mãi (${currentCoupon.code})`;
+        } else {
+            summaryDiscountRow.classList.add('hidden');
+        }
+
+        document.getElementById('summary-total').textContent = actualTotal.toLocaleString('en-US');
+    }
+});
+</script>
         </div>
 
         <!-- Related Cars -->

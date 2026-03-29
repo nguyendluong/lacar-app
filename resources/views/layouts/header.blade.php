@@ -48,8 +48,24 @@
                 
                 <!-- Auth Buttons -->
                 <div class="flex items-center space-x-4">
-                    <a href="#" class="text-gray-700 font-semibold border border-gray-300 rounded-md py-2 px-4 hover:bg-gray-50 transition shadow-sm">ĐĂNG KÝ</a>
-                    <a href="#" class="bg-green-600 text-white font-semibold rounded-md py-2 px-4 hover:bg-green-700 transition shadow-md">ĐĂNG NHẬP</a>
+                    @auth
+                        <div class="relative group">
+                            <span class="text-gray-700 font-semibold cursor-pointer py-2 hover:text-green-600 transition">{{ Auth::user()->name }}</span>
+                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block border border-gray-200">
+                                @if(Auth::user()->is_admin)
+                                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-green-700 hover:bg-green-50 font-bold border-b border-gray-100">💻 HỆ THỐNG QUẢN TRỊ</a>
+                                @endif
+                                <a href="{{ route('bookings.index') }}" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 font-bold border-b border-gray-100 transition">🚗 Lịch sử thuê xe</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="block w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 font-bold transition">Đăng xuất</button>
+                                </form>
+                            </div>
+                        </div>
+                    @else
+                        <a href="{{ route('register') }}" class="text-gray-700 font-semibold border border-gray-300 rounded-md py-2 px-4 hover:bg-gray-50 transition shadow-sm">ĐĂNG KÝ</a>
+                        <a href="{{ route('login') }}" class="bg-green-600 text-white font-semibold rounded-md py-2 px-4 hover:bg-green-700 transition shadow-md">ĐĂNG NHẬP</a>
+                    @endauth
                 </div>
             </div>
 

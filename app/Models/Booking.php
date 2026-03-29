@@ -14,6 +14,9 @@ class Booking extends Model
         'end_date',
         'total_price',
         'status',
+        'note',
+        'coupon_code',
+        'discount_amount',
     ];
 
     /**
