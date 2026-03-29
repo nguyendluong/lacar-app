@@ -9,7 +9,18 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/setup-db', function () {
     Artisan::call('migrate:fresh', ['--seed' => true, '--force' => true]);
-    return 'Tuyệt vời! Cơ sở dữ liệu đã được cài đặt & thêm xe mẫu thành công. Hãy quay lại trang chủ và sử dụng nhé!';
+    
+    // Tạo luôn 1 tài khoản Admin cho Tester
+    \App\Models\User::updateOrCreate(
+        ['email' => 'admin@lacar.com'],
+        [
+            'name' => 'Admin Tester',
+            'password' => bcrypt('password'), // Mật khẩu là: password
+            'is_admin' => true,
+        ]
+    );
+
+    return 'Thành công! Máy chủ đã sẵn sàng.<br><br><b>Tài khoản Admin:</b> admin@lacar.com<br><b>Mật khẩu:</b> password<br><br><a href="/">Bấm vào đây để về trang chủ</a>';
 });
 Route::get('/doi-xe', [HomeController::class, 'fleet'])->name('fleet');
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
