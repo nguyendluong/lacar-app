@@ -36,18 +36,41 @@ class HomeController extends Controller
      */
     public function fleet(Request $request)
     {
-        $featuredCars = $this->carService->getFeaturedCarsForHome();
-        $featuredCars->load(['bookings' => function($query) {
-            $query->whereIn('status', ['pending', 'confirmed'])
-                  ->where('end_date', '>=', now()->startOfDay());
-        }]);
-
         $startDateStr = $request->query('start_date');
+        $endDateStr = $request->query('end_date');
+        
         $startDate = $startDateStr ? \Carbon\Carbon::parse($startDateStr)->startOfDay() : now()->startOfDay();
+        $endDate = $endDateStr ? \Carbon\Carbon::parse($endDateStr)->endOfDay() : null;
+
         // Prevent seeing past dates
         if ($startDate->isPast() && !$startDate->isToday()) {
             $startDate = now()->startOfDay();
         }
+
+        $query = \App\Models\Car::query()->where('status', 'available');
+
+        // Filter out cars that are booked in the selected date range
+        if ($startDateStr && $endDateStr && $endDate && $endDate->greaterThanOrEqualTo($startDate)) {
+            $query->whereDoesntHave('bookings', function($q) use ($startDate, $endDate) {
+                $q->whereIn('status', ['pending', 'confirmed', 'picked_up'])
+                  ->where(function($q2) use ($startDate, $endDate) {
+                      $q2->whereBetween('start_date', [$startDate, $endDate])
+                         ->orWhereBetween('end_date', [$startDate, $endDate])
+                         ->orWhere(function($q3) use ($startDate, $endDate) {
+                             $q3->where('start_date', '<=', $startDate)
+                                ->where('end_date', '>=', $endDate);
+                         });
+                  });
+            });
+        }
+
+        $featuredCars = $query->get();
+        
+        // Load bookings strictly for the calendar visualization part
+        $featuredCars->load(['bookings' => function($query) {
+            $query->whereIn('status', ['pending', 'confirmed'])
+                  ->where('end_date', '>=', now()->startOfDay());
+        }]);
 
         $days = [];
         $currentDate = clone $startDate;
