@@ -44,7 +44,7 @@
             </div>
             
             <!-- Quick Booking Form (Styling only) -->
-            <div id="booking-form" class="mt-12 bg-white rounded-lg p-4 shadow-2xl flex flex-wrap gap-4 items-end max-w-5xl text-gray-800 relative z-10">
+            <form action="{{ route('fleet') }}" method="GET" id="booking-form" class="mt-12 bg-white rounded-lg p-4 shadow-2xl flex flex-wrap gap-4 items-end max-w-5xl text-gray-800 relative z-10">
                 <div class="flex-1 min-w-[200px]">
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Loại xe phù hợp <span class="bg-yellow-200 text-yellow-800 text-[10px] px-1 rounded ml-1">PHỔ BIẾN</span></label>
                     <select class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
@@ -58,23 +58,23 @@
                 <div class="flex-1 min-w-[200px]">
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Ngày nhận</label>
                     <div class="flex gap-2">
-                        <input type="date" class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                        <input type="time" class="block w-24 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" value="09:00">
+                        <input type="date" name="start_date" class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                        <input type="time" name="start_time" class="block w-24 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" value="09:00">
                     </div>
                 </div>
                 <div class="flex-1 min-w-[200px]">
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Ngày trả</label>
                     <div class="flex gap-2">
-                        <input type="date" class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                        <input type="time" class="block w-24 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" value="18:00">
+                        <input type="date" name="end_date" class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                        <input type="time" name="end_time" class="block w-24 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" value="18:00">
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-6 rounded-md transition shadow-md">
+                    <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-6 rounded-md transition shadow-md">
                         TÌM XE NGAY
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 
