@@ -3,10 +3,10 @@
 @section('title', 'Cách thuê xe - L/A CAR')
 
 @section('content')
-<div class="bg-white py-16">
+<div class="bg-white py-12 md:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">Cách thuê xe</h1>
-        <p class="text-lg text-gray-500 mb-12 max-w-2xl mx-auto">Thuê xe điện chưa bao giờ dễ dàng đến thế. Chỉ 4 bước
+        <h1 class="text-2xl md:text-4xl font-black text-gray-900 mb-4 uppercase tracking-tight">Cách thuê xe</h1>
+        <p class="text-base md:text-lg text-gray-500 mb-12 max-w-2xl mx-auto">Thuê xe điện chưa bao giờ dễ dàng đến thế. Chỉ 4 bước
             đơn giản.</p>
 
         <div class="bg-gray-50 rounded-2xl p-8 shadow-sm border border-gray-100 relative">

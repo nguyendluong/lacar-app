@@ -89,29 +89,38 @@
             </div>
             
             <!-- Table Body -->
-            <div class="overflow-x-auto p-0 flex-1 custom-scrollbar">
-                <table class="w-full text-left text-sm whitespace-nowrap border-collapse">
+            <div class="overflow-x-auto p-0 flex-1 custom-scrollbar scroll-smooth">
+                <table class="w-full text-left text-sm whitespace-nowrap border-separate border-spacing-0">
                     <thead>
                         <tr class="bg-gray-100 shadow-sm">
-                            <th class="px-5 py-4 font-extrabold text-gray-800 w-56 sticky left-0 bg-gray-100 z-20 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] uppercase tracking-wide text-xs">🚗 PHƯƠNG TIỆN</th>
+                            <th class="px-5 py-4 font-extrabold text-gray-800 w-44 md:w-56 sticky left-0 bg-gray-100 z-30 border-b border-gray-200 uppercase tracking-widest text-[10px] md:text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span>🚗 PHƯƠNG TIỆN</span>
+                                    <div class="md:hidden animate-pulse">
+                                        <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    </div>
+                                </div>
+                            </th>
                             @foreach($days as $day)
-                                <th class="px-2 py-3 text-center min-w-[55px] border-l border-gray-200 {{ $day->isWeekend() ? 'text-red-500 bg-red-50/50' : 'text-gray-600 bg-white' }}">
-                                    <div class="text-[10px] uppercase font-bold tracking-widest opacity-80">{{ $day->translatedFormat('D') }}</div>
-                                    <div class="font-extrabold text-lg mt-0.5">{{ $day->format('d') }}</div>
+                                <th class="px-2 py-3 text-center min-w-[50px] md:min-w-[60px] border-l border-b border-gray-200 {{ $day->isWeekend() ? 'text-red-500 bg-red-50/50' : 'text-gray-600 bg-white' }}">
+                                    <div class="text-[9px] md:text-[10px] uppercase font-black tracking-widest opacity-70">{{ $day->translatedFormat('D') }}</div>
+                                    <div class="font-black text-base md:text-lg mt-0.5">{{ $day->format('d') }}</div>
                                 </th>
                             @endforeach
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @foreach($featuredCars as $car)
-                        <tr class="hover:bg-blue-50/30 transition group">
-                            <td class="px-5 py-3 font-bold text-gray-900 sticky left-0 bg-white group-hover:bg-blue-50/80 transition shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] z-10 flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden shrink-0 border border-gray-200 shadow-sm relative">
-                                    <img src="{{ asset('images/cars/' . $car->image) }}" class="w-full h-full object-cover">
-                                </div>
-                                <div>
-                                    <div class="truncate w-36 text-sm" title="{{ $car->name }}">{{ $car->name }}</div>
-                                    <div class="text-[10px] text-gray-500 font-medium uppercase mt-0.5 tracking-wider">{{ $car->license_plate }}</div>
+                        <tr class="hover:bg-blue-50/30 transition-colors group">
+                            <td class="px-4 py-3 font-bold text-gray-900 sticky left-0 bg-white group-hover:bg-blue-50/80 transition-colors z-20 border-r border-gray-100 shadow-[4px_0_8px_-4px_rgba(0,0,0,0.1)]">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gray-50 overflow-hidden shrink-0 border border-gray-200 shadow-sm">
+                                        <img src="{{ asset('images/cars/' . $car->image) }}" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="truncate w-24 md:w-36 text-xs md:text-sm" title="{{ $car->name }}">{{ $car->name }}</div>
+                                        <div class="text-[9px] md:text-[10px] text-gray-400 font-bold uppercase mt-0.5 tracking-widest">{{ $car->license_plate }}</div>
+                                    </div>
                                 </div>
                             </td>
                             @foreach($days as $day)
@@ -128,12 +137,12 @@
                                 @endphp
                                 <td class="px-1 py-3 text-center border-l border-gray-100 {{ $day->isWeekend() ? 'bg-gray-50/30' : '' }}">
                                     @if($isBooked)
-                                        <div class="h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-md relative flex items-center justify-center cursor-not-allowed shadow-[inset_0_1px_3px_rgba(0,0,0,0.2)] mx-0.5" title="Đã có người thuê">
-                                            <svg class="w-5 h-5 text-white opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                        <div class="h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-lg relative flex items-center justify-center cursor-not-allowed shadow-inner mx-0.5 group/booked" title="Đã có người thuê">
+                                            <svg class="w-4 h-4 md:w-5 md:h-5 text-white/80 group-hover/booked:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                                         </div>
                                     @else
-                                        <div class="h-10 bg-[#E8F5E9] border border-[#C8E6C9] hover:bg-[#4CAF50] hover:border-[#4CAF50] group/cell rounded-md relative flex items-center justify-center transition-all cursor-pointer mx-0.5" onclick="window.location='{{ route('car.show', $car->id) }}'" title="Sẵn sàng cho thuê - Chạm để đặt ngay">
-                                            <span class="text-[#2E7D32] group-hover/cell:text-white text-[11px] font-extrabold transition-colors">TRỐNG</span>
+                                        <div class="h-10 bg-green-50 border border-green-100 hover:bg-green-600 hover:border-green-600 group/cell rounded-lg relative flex items-center justify-center transition-all cursor-pointer mx-0.5 shadow-sm active:scale-95" onclick="window.location='{{ route('car.show', $car->id) }}'" title="Sẵn sàng cho thuê - Chạm để đặt ngay">
+                                            <span class="text-green-700 group-hover/cell:text-white text-[9px] md:text-[10px] font-black transition-colors">TRỐNG</span>
                                         </div>
                                     @endif
                                 </td>
@@ -145,19 +154,19 @@
             </div>
             
             <!-- Legend Footer -->
-            <div class="px-6 py-5 bg-white border-t border-gray-200 flex flex-col sm:flex-row gap-6 font-semibold justify-between items-center sm:items-start">
+            <div class="px-6 py-5 bg-white border-t border-gray-200 flex flex-col sm:flex-row gap-6 font-bold justify-between items-center sm:items-start text-xs text-gray-600">
                 <div class="flex gap-6">
-                    <div class="flex items-center gap-3">
-                        <div class="w-6 h-6 bg-[#E8F5E9] border border-[#C8E6C9] rounded-md shrink-0 flex items-center justify-center"><span class="text-[#2E7D32] text-[8px] font-bold">OK</span></div>
-                        <span class="text-gray-700 text-sm">Trống (Có thể đặt)</span>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 bg-green-50 border border-green-100 rounded flex items-center justify-center"><span class="text-green-700 text-[8px] font-black">OK</span></div>
+                        <span>Trống</span>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-6 h-6 bg-red-500 rounded-md shrink-0 flex items-center justify-center opacity-90"><svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg></div>
-                        <span class="text-gray-700 text-sm">Đã được thuê</span>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 bg-red-500 rounded flex items-center justify-center shadow-sm"><svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg></div>
+                        <span>Đã thuê</span>
                     </div>
                 </div>
-                <div class="text-xs text-gray-400 mt-2 sm:mt-0 italic">
-                    * Ấn vào ô màu xanh để chuyển đến trang đặt xe tương ứng.
+                <div class="text-[10px] text-gray-400 italic font-medium">
+                    * Vuốt sang phải để xem tiếp lịch trình.
                 </div>
             </div>
         </div>
@@ -165,18 +174,17 @@
     
     <style>
         .custom-scrollbar::-webkit-scrollbar {
-            height: 8px;
+            height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-            border-radius: 4px;
+            background: #f8fafc; 
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
+            background: #e2e8f0; 
+            border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
+            background: #cbd5e1; 
         }
     </style>
     

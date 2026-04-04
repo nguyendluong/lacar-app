@@ -44,10 +44,14 @@
             </div>
             
             <!-- Quick Booking Form (Styling only) -->
-            <form action="{{ route('fleet') }}" method="GET" id="booking-form" class="mt-12 bg-white rounded-lg p-4 shadow-2xl flex flex-wrap gap-4 items-end max-w-5xl text-gray-800 relative z-10">
-                <div class="flex-1 min-w-[200px]">
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Loại xe phù hợp <span class="bg-yellow-200 text-yellow-800 text-[10px] px-1 rounded ml-1">PHỔ BIẾN</span></label>
-                    <select class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+            <form action="{{ route('fleet') }}" method="GET" id="booking-form" class="mt-12 bg-white rounded-2xl p-6 shadow-2xl flex flex-col lg:flex-row gap-6 lg:items-end max-w-6xl text-gray-800 relative z-10 border border-white border-opacity-20 backdrop-blur-sm">
+                <div class="flex-1">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Loại xe phù hợp
+                        <span class="bg-yellow-100 text-yellow-700 text-[9px] px-1.5 py-0.5 rounded-full font-black">HOT</span>
+                    </label>
+                    <select class="block w-full border-gray-200 bg-gray-50 rounded-xl py-3 px-4 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all font-semibold outline-none appearance-none cursor-pointer">
                         <option>Tất cả xe điện</option>
                         <option>VinFast VF3</option>
                         <option>VinFast VF5 Plus</option>
@@ -55,23 +59,24 @@
                         <option>VinFast VF8</option>
                     </select>
                 </div>
-                <div class="flex-1 min-w-[200px]">
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Ngày nhận</label>
-                    <div class="flex gap-2">
-                        <input type="date" name="start_date" class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                        <input type="time" name="start_time" class="block w-24 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" value="09:00">
+                <div class="flex-1">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Ngày nhận</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="date" name="start_date" class="block w-full border-gray-200 bg-gray-50 rounded-xl py-3 px-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all font-semibold outline-none">
+                        <input type="time" name="start_time" class="block w-full border-gray-200 bg-gray-50 rounded-xl py-3 px-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all font-semibold outline-none" value="09:00">
                     </div>
                 </div>
-                <div class="flex-1 min-w-[200px]">
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Ngày trả</label>
-                    <div class="flex gap-2">
-                        <input type="date" name="end_date" class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                        <input type="time" name="end_time" class="block w-24 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" value="18:00">
+                <div class="flex-1">
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Ngày trả</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="date" name="end_date" class="block w-full border-gray-200 bg-gray-50 rounded-xl py-3 px-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all font-semibold outline-none">
+                        <input type="time" name="end_time" class="block w-full border-gray-200 bg-gray-50 rounded-xl py-3 px-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all font-semibold outline-none" value="18:00">
                     </div>
                 </div>
-                <div>
-                    <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-6 rounded-md transition shadow-md">
-                        TÌM XE NGAY
+                <div class="lg:w-auto w-full">
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-black py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-green-500/30 flex items-center justify-center gap-2 transform active:scale-95">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        TÌM XE
                     </button>
                 </div>
             </form>
@@ -388,34 +393,38 @@
                     </div>
                     
                     <!-- Mobile version -->
-                    <div class="bg-[#52B755] rounded-xl p-6 md:hidden shadow-sm">
-                        <div class="space-y-6">
-                            <div class="flex gap-4">
-                                <div class="flex-shrink-0 w-8 h-8 bg-white text-green-600 rounded-full flex items-center justify-center font-bold text-sm">1</div>
-                                <div class="text-white mt-1">
-                                    <h4 class="font-bold text-sm">Đặt Online</h4>
-                                    <p class="text-xs text-white opacity-90 mt-1">Chọn ngày, đặt qua app/website trong 5 phút</p>
+                    <div class="bg-[#52B755] rounded-2xl p-8 md:hidden shadow-sm relative overflow-hidden">
+                        <!-- Background decoration -->
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-black/5 rounded-full blur-3xl"></div>
+
+                        <div class="space-y-10 relative z-10">
+                            <div class="flex gap-5">
+                                <div class="flex-shrink-0 w-10 h-10 bg-white text-green-600 rounded-xl flex items-center justify-center font-black text-lg shadow-lg rotate-3">1</div>
+                                <div class="text-white">
+                                    <h4 class="font-black text-base uppercase tracking-tight">Đặt Online</h4>
+                                    <p class="text-sm text-white/90 mt-1 leading-relaxed">Chọn ngày, đặt qua app/website trong 5 phút. Nhanh chóng & tiện lợi.</p>
                                 </div>
                             </div>
-                            <div class="flex gap-4">
-                                <div class="flex-shrink-0 w-8 h-8 bg-white text-green-600 rounded-full flex items-center justify-center font-bold text-sm">2</div>
-                                <div class="text-white mt-1">
-                                    <h4 class="font-bold text-sm">Xác Thực</h4>
-                                    <p class="text-xs text-white opacity-90 mt-1">Upload CMND/GPLX, đặt cọc online</p>
+                            <div class="flex gap-5">
+                                <div class="flex-shrink-0 w-10 h-10 bg-white text-green-600 rounded-xl flex items-center justify-center font-black text-lg shadow-lg -rotate-3">2</div>
+                                <div class="text-white">
+                                    <h4 class="font-black text-base uppercase tracking-tight">Xác Thực</h4>
+                                    <p class="text-sm text-white/90 mt-1 leading-relaxed">Upload CMND/GPLX & đặt cọc bảo đảm tài sản trực tuyến.</p>
                                 </div>
                             </div>
-                            <div class="flex gap-4">
-                                <div class="flex-shrink-0 w-8 h-8 bg-white text-green-600 rounded-full flex items-center justify-center font-bold text-sm">3</div>
-                                <div class="text-white mt-1">
-                                    <h4 class="font-bold text-sm">Nhận Xe</h4>
-                                    <p class="text-xs text-white opacity-90 mt-1">Nhận tại văn phòng hoặc giao tận nơi</p>
+                            <div class="flex gap-5">
+                                <div class="flex-shrink-0 w-10 h-10 bg-white text-green-600 rounded-xl flex items-center justify-center font-black text-lg shadow-lg rotate-3">3</div>
+                                <div class="text-white">
+                                    <h4 class="font-black text-base uppercase tracking-tight">Nhận Xe</h4>
+                                    <p class="text-sm text-white/90 mt-1 leading-relaxed">Nhận tại văn phòng hoặc chúng tôi giao tận nơi theo yêu cầu.</p>
                                 </div>
                             </div>
-                            <div class="flex gap-4">
-                                <div class="flex-shrink-0 w-8 h-8 bg-white text-green-600 rounded-full flex items-center justify-center font-bold text-sm">4</div>
-                                <div class="text-white mt-1">
-                                    <h4 class="font-bold text-sm">Tận Hưởng</h4>
-                                    <p class="text-xs text-white opacity-90 mt-1">Lái xe khám phá Đà Nẵng, hỗ trợ 24/7</p>
+                            <div class="flex gap-5">
+                                <div class="flex-shrink-0 w-10 h-10 bg-white text-green-600 rounded-xl flex items-center justify-center font-black text-lg shadow-lg -rotate-3">4</div>
+                                <div class="text-white">
+                                    <h4 class="font-black text-base uppercase tracking-tight">Tận Hưởng</h4>
+                                    <p class="text-sm text-white/90 mt-1 leading-relaxed">Lái xe khám phá Đà Nẵng. Luôn có đội ngũ hỗ trợ 24/7.</p>
                                 </div>
                             </div>
                         </div>

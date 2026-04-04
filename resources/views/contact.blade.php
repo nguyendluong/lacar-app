@@ -8,13 +8,15 @@
         <h1 class="text-4xl font-bold text-gray-900 mb-4">Liên hệ với chúng tôi</h1>
         <p class="text-lg text-gray-500 mb-8 max-w-2xl mx-auto">Chúng tôi ở đây để giúp bạn</p>
         
-        <div class="bg-green-100 text-green-800 text-sm font-medium py-4 px-6 rounded-2xl md:rounded-full flex flex-col md:flex-row items-center justify-between gap-4 mb-12 shadow-sm w-full mx-auto">
-            <div class="flex items-center gap-2 text-center md:text-left">
-                <svg class="w-5 h-5 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span>Liên hệ khẩn cấp <strong>084 504 5468</strong></span>
+            <div class="bg-green-100 text-green-800 text-xs md:text-sm font-bold py-4 px-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 mb-12 shadow-sm w-full mx-auto border border-green-200">
+                <div class="flex items-center gap-3">
+                    <div class="bg-green-600 text-white p-1.5 rounded-full animate-pulse">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <span>Liên hệ khẩn cấp: <strong class="text-green-900">084 504 5468</strong></span>
+                </div>
+                <span class="text-[10px] md:text-xs font-medium opacity-80">Cho sự cố, tai nạn hoặc hỗ trợ khẩn cấp</span>
             </div>
-            <span class="text-center md:text-right">Cho sự cố, tai nạn hoặc hỗ trợ khẩn cấp</span>
-        </div>
 
         <div class="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto items-stretch">
             <!-- Contact Form -->

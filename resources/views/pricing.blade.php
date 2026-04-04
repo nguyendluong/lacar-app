@@ -5,8 +5,8 @@
 @section('content')
 <div class="bg-gray-50 py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">Bảng giá đơn giản minh bạch</h1>
-        <p class="text-lg text-gray-500 mb-8 max-w-2xl mx-auto">Không phí ẩn. Tất cả giá đã bao gồm bảo hiểm, sạc điện
+        <h1 class="text-2xl md:text-4xl font-black text-gray-900 mb-4 uppercase tracking-tight">Bảng giá đơn giản minh bạch</h1>
+        <p class="text-base md:text-lg text-gray-500 mb-8 max-w-2xl mx-auto">Không phí ẩn. Tất cả giá đã bao gồm bảo hiểm, sạc điện
             và hỗ trợ 24/7.</p>
 
         <div

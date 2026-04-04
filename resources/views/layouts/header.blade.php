@@ -71,23 +71,75 @@
 
             <!-- Mobile menu button -->
             <div class="-mr-2 flex items-center md:hidden">
-                <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500" aria-expanded="false">
+                <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
                     <!-- Icon when menu is closed. -->
-                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <svg id="menu-icon-closed" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <!-- Icon when menu is open. -->
+                    <svg id="menu-icon-open" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         </div>
     </div>
     <!-- Mobile Menu (Hidden by default) -->
-    <div class="sm:hidden hidden bg-white border-t border-gray-200" id="mobile-menu">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
-            <a href="{{ route('fleet') }}" class="{{ request()->routeIs('fleet') ? 'bg-green-50 text-green-600' : 'text-gray-600 hover:bg-gray-50' }} block px-3 py-2 rounded-md text-base font-bold uppercase transition">Đội Xe</a>
-            <a href="{{ route('pricing') }}" class="{{ request()->routeIs('pricing') ? 'bg-green-50 text-green-600' : 'text-gray-600 hover:bg-gray-50' }} block px-3 py-2 rounded-md text-base font-bold uppercase transition">Bảng Giá</a>
-            <a href="{{ route('how_to_rent') }}" class="{{ request()->routeIs('how_to_rent') ? 'bg-green-50 text-green-600' : 'text-gray-600 hover:bg-gray-50' }} block px-3 py-2 rounded-md text-base font-bold uppercase transition">Cách Thuê</a>
-            <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'bg-green-50 text-green-600' : 'text-gray-600 hover:bg-gray-50' }} block px-3 py-2 rounded-md text-base font-bold uppercase transition">Liên Hệ</a>
+    <div class="md:hidden hidden bg-white border-t border-gray-200 transition-all duration-300 ease-in-out" id="mobile-menu">
+        <div class="px-4 pt-4 pb-6 space-y-2 text-center bg-gray-50">
+            <a href="{{ route('fleet') }}" class="{{ request()->routeIs('fleet') ? 'bg-green-600 text-white shadow-md' : 'text-gray-700 hover:bg-green-50 hover:text-green-600' }} block px-4 py-3 rounded-lg text-base font-bold uppercase transition-all">Đội Xe</a>
+            <a href="{{ route('pricing') }}" class="{{ request()->routeIs('pricing') ? 'bg-green-600 text-white shadow-md' : 'text-gray-700 hover:bg-green-50 hover:text-green-600' }} block px-4 py-3 rounded-lg text-base font-bold uppercase transition-all">Bảng Giá</a>
+            <a href="{{ route('how_to_rent') }}" class="{{ request()->routeIs('how_to_rent') ? 'bg-green-600 text-white shadow-md' : 'text-gray-700 hover:bg-green-50 hover:text-green-600' }} block px-4 py-3 rounded-lg text-base font-bold uppercase transition-all">Cách Thuê</a>
+            <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'bg-green-600 text-white shadow-md' : 'text-gray-700 hover:bg-green-50 hover:text-green-600' }} block px-4 py-3 rounded-lg text-base font-bold uppercase transition-all">Liên Hệ</a>
+            
+            <div class="pt-4 mt-4 border-t border-gray-200">
+                <div class="flex flex-col space-y-3">
+                    @auth
+                        <div class="text-gray-500 text-xs mb-1">Xin chào, <span class="font-bold text-gray-900">{{ Auth::user()->name }}</span></div>
+                        @if(Auth::user()->is_admin)
+                            <a href="{{ route('admin.dashboard') }}" class="bg-green-100 text-green-700 font-bold py-3 px-4 rounded-lg text-sm transition">Hệ Thống Quản Trị</a>
+                        @endif
+                        <a href="{{ route('bookings.index') }}" class="bg-blue-50 text-blue-700 font-bold py-3 px-4 rounded-lg text-sm transition">Lịch sử thuê xe</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full bg-red-50 text-red-600 font-bold py-3 px-4 rounded-lg text-sm transition">Đăng xuất</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="bg-green-600 text-white font-bold py-3 px-4 rounded-lg text-sm shadow-md transition active:scale-95">ĐĂNG NHẬP</a>
+                        <a href="{{ route('register') }}" class="bg-white text-gray-700 border border-gray-300 font-bold py-3 px-4 rounded-lg text-sm shadow-sm transition active:scale-95">ĐĂNG KÝ</a>
+                    @endauth
+                </div>
+            </div>
+
+            <!-- Mobile Hotline -->
+            <div class="mt-6 p-4 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center gap-3">
+                <div class="bg-green-100 p-2 rounded-full">
+                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </div>
+                <div class="text-left">
+                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest leading-none">Hotline 24/7</p>
+                    <p class="text-base font-black text-gray-900">084 504 5468</p>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+            const iconClosed = document.getElementById('menu-icon-closed');
+            const iconOpen = document.getElementById('menu-icon-open');
+
+            btn.addEventListener('click', () => {
+                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', !isExpanded);
+                menu.classList.toggle('hidden');
+                iconClosed.classList.toggle('hidden');
+                iconOpen.classList.toggle('hidden');
+            });
+        });
+    </script>
 </header>
+

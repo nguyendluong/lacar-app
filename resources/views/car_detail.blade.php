@@ -60,24 +60,27 @@
             <!-- Main Content (Left) -->
             <div class="w-full lg:w-2/3">
                 <!-- Images Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-                    <div
-                        class="col-span-1 md:col-span-2 lg:col-span-2 row-span-2 h-96 rounded-2xl overflow-hidden bg-gray-200 shadow-sm border border-gray-100">
+                <div class="mb-8">
+                    <!-- Main Image -->
+                    <div class="h-64 md:h-96 w-full rounded-2xl overflow-hidden bg-gray-200 shadow-sm border border-gray-100 mb-4">
                         <img src="{{ asset('images/cars/' . $car->image) }}" class="w-full h-full object-cover"
                             onerror="this.src='https://via.placeholder.com/800x600?text={{ urlencode($car->name) }}'"
                             alt="{{ $car->name }}">
                     </div>
-                    <div
-                        class="hidden lg:block h-44 rounded-xl overflow-hidden bg-gray-200 shadow-sm border border-gray-100">
-                        <img src="{{ asset('images/cars/' . $car->image) }}"
-                            class="w-full h-full object-cover scale-110"
-                            onerror="this.src='https://via.placeholder.com/400x300?text=Side'" alt="Side View">
-                    </div>
-                    <div
-                        class="hidden lg:block h-44 rounded-xl overflow-hidden bg-gray-200 shadow-sm border border-gray-100">
-                        <img src="{{ asset('images/cars/' . $car->image) }}"
-                            class="w-full h-full object-cover scale-125"
-                            onerror="this.src='https://via.placeholder.com/400x300?text=Interior'" alt="Interior View">
+                    
+                    <!-- Additional Images (Scroll on mobile, grid on desktop) -->
+                    <div class="flex md:grid md:grid-cols-2 gap-4 overflow-x-auto pb-4 md:pb-0 hide-scrollbar scroll-smooth snap-x">
+                        <div class="min-w-[200px] md:min-w-0 h-32 md:h-44 rounded-xl overflow-hidden bg-gray-200 shadow-sm border border-gray-100 snap-start flex-shrink-0">
+                            <img src="{{ asset('images/cars/' . $car->image) }}"
+                                class="w-full h-full object-cover scale-110"
+                                onerror="this.src='https://via.placeholder.com/400x300?text=Side'" alt="Side View">
+                        </div>
+                        <div class="min-w-[200px] md:min-w-0 h-32 md:h-44 rounded-xl overflow-hidden bg-gray-200 shadow-sm border border-gray-100 snap-start flex-shrink-0">
+                            <img src="{{ asset('images/cars/' . $car->image) }}"
+                                class="w-full h-full object-cover scale-125"
+                                onerror="this.src='https://via.placeholder.com/400x300?text=Interior'" alt="Interior View">
+                        </div>
+                        <!-- Add more here if available -->
                     </div>
                 </div>
 
@@ -233,7 +236,7 @@
             </div>
 
             <!-- Booking Sidebar (Right) -->
-            <div class="w-full lg:w-1/3">
+            <div class="w-full lg:w-1/3" id="booking-sidebar">
                 <div
                     class="bg-white border text-left border-gray-200 rounded-2xl shadow-lg sticky top-6 overflow-hidden">
                     <div class="p-6">
@@ -553,4 +556,47 @@
         @endif
     </div>
 </div>
+
+<!-- Mobile Floating Action Bar -->
+<div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40 transform transition-transform duration-300 translate-y-0 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]" id="mobile-action-bar">
+    <div class="flex items-center justify-between max-w-7xl mx-auto">
+        <div>
+            <div class="text-lg font-black text-blue-600">{{ number_format($car->price_per_day) }} đ</div>
+            <div class="text-[10px] text-gray-500 uppercase font-bold">Giá thuê 1 ngày</div>
+        </div>
+        <button onclick="document.getElementById('booking-sidebar').scrollIntoView({ behavior: 'smooth', block: 'start' });" class="bg-green-600 text-white font-black py-3 px-8 rounded-xl shadow-lg active:scale-95 transition-transform text-sm uppercase tracking-wider">
+            ĐẶT XE NGAY
+        </button>
+    </div>
+</div>
+
+<style>
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+
+<script>
+    // Hide/Show floating bar based on scroll position - show only when booking sidebar is NOT in view
+    window.addEventListener('scroll', function() {
+        const bar = document.getElementById('mobile-action-bar');
+        const sidebar = document.getElementById('booking-sidebar');
+        if (!bar || !sidebar) return;
+        
+        const rect = sidebar.getBoundingClientRect();
+        const isInView = (rect.top >= 0 && rect.top <= window.innerHeight);
+        
+        if (isInView) {
+            bar.classList.add('translate-y-full');
+            bar.classList.remove('translate-y-0');
+        } else {
+            bar.classList.remove('translate-y-full');
+            bar.classList.add('translate-y-0');
+        }
+    });
+</script>
 @endsection
